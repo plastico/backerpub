@@ -9,19 +9,33 @@
       <h3>Password</h3>
       <input type="text" placeholder="Password" v-model="password" />
     </div>
-    <button @click="createUserAccount">Sing UP!!</button>
+    <button @click="createUserAccount">Sign UP!!</button>
   </div>
 </template>
 
 <script>
 import firebase from "../firebase.js";
 export default {
-  name: "singup",
+  name: "signup",
   data() {
     return {
       email: "",
       password: ""
     };
+  },
+  methods: {
+    createUserAccount() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          alert("Create Account");
+        })
+        .catch(error => {
+          alert("Error!", error.message);
+          console.error("Account Regeister Error", error.message);
+        });
+    }
   }
 };
 </script>
