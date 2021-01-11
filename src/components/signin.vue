@@ -1,15 +1,36 @@
 <template>
+
+
   <div>
-    <h1>SIGN IN</h1>
-    <div>
-      <h3>E-mail</h3>
-      <input type="text" placeholder="E-mail" v-model="email" />
-    </div>
-    <div>
-      <h3>Password</h3>
-      <input type="text" placeholder="Password" v-model="password" />
-    </div>
-    <button @click="userSingIn">Sign in Now!!</button>
+    <v-app>
+            <v-snackbar v-model="snackbar" :color="snackbarColor" :top="true" timeout="3000">
+      {{ snackbarText }}
+      <v-btn text @click="snackbar = false">閉じる</v-btn>
+    </v-snackbar>
+    <v-card width="400px" class="mx-auto mt-5">
+        <v-card-title>
+        <h1 class="display-1">ログイン</h1>
+        </v-card-title>
+        <v-card-text>
+            <v-text-field
+                label="E-mail" v-model="email" 
+            ></v-text-field>
+            <v-text-field
+                label="Password" type="password"  v-model="password" 
+            ></v-text-field>
+        </v-card-text>
+            <v-card-actions>
+                 <v-btn @click="userSingIn">Sign in Now!!</v-btn>
+            </v-card-actions>
+           
+
+    </v-card>
+    </v-app>
+
+
+
+
+    
   </div>
 </template>
 
@@ -20,7 +41,10 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      snackbar: false,
+      snackbarText: '',
+      snackbarColor: '',
     };
   },
   methods: {
@@ -29,7 +53,9 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          alert("ログイン成功!");
+           this.snackbarText = 'ログイン成功!';
+          this.snackbarColor = 'success';
+          this.snackbar = true;
           this.$router.push("/mypage");
         });
     }
