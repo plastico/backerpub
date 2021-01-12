@@ -67,32 +67,32 @@ import { fabric } from 'fabric-browseronly'
       ],
     }),
     mounted() {
-    const canvas = new fabric.Canvas('canvas');
+    const canvas = new fabric.Canvas('canvas',{preserveObjectStacking: true});
     
     const rect = new fabric.Rect({
       fill: 'red',
       width: 100,
       height: 100,
-      hasControls:false
+      hasControls:true
     });
     new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-as-ar.png', function(oImg) {
         oImg.scale(0.25);
-        oImg.hasControls = false;
+        oImg.hasControls =  oImg.hasBorders  = false;
         canvas.add(oImg);
       });
     new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-out.png', function(oImg) {
       oImg.scale(0.25);
-      oImg.hasControls = false;
+      oImg.hasControls =  oImg.hasBorders  = false;
       canvas.add(oImg);
     });
     new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-ski.png', function(oImg) {
       oImg.scale(0.25);
-      oImg.hasControls = false;
+      oImg.hasControls =  oImg.hasBorders  = false;
       canvas.add(oImg);
     });
     new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-adv.png', function(oImg) {
       oImg.scale(0.25);
-      oImg.hasControls = false;
+      oImg.hasControls =  oImg.hasBorders  = false;
       canvas.add(oImg);
     });
     canvas.add(rect);

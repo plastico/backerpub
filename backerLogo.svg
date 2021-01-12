@@ -7,34 +7,34 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="backerLogo.svg"
-   inkscape:version="1.0 (4035a4f, 2020-05-01)"
-   id="svg8"
-   version="1.1"
-   viewBox="0 0 210 297"
+   width="210mm"
    height="297mm"
-   width="210mm">
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0 (4035a4f, 2020-05-01)"
+   sodipodi:docname="backerLogo.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
-     inkscape:window-maximized="0"
-     inkscape:window-y="25"
-     inkscape:window-x="0"
-     inkscape:window-height="792"
-     inkscape:window-width="1440"
-     showgrid="false"
-     inkscape:document-rotation="0"
-     inkscape:current-layer="layer1"
-     inkscape:document-units="mm"
-     inkscape:cy="192.003"
-     inkscape:cx="225.36907"
-     inkscape:zoom="1.4"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
+     id="base"
      pagecolor="#ffffff"
-     id="base" />
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.2583459"
+     inkscape:cx="254.88872"
+     inkscape:cy="265.75602"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="792"
+     inkscape:window-x="34"
+     inkscape:window-y="34"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -43,42 +43,36 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     id="layer1"
+     inkscape:label="レイヤー 1"
      inkscape:groupmode="layer"
-     inkscape:label="レイヤー 1">
+     id="layer1">
     <path
-       inkscape:export-ydpi="96"
-       inkscape:export-xdpi="96"
-       inkscape:export-filename="/Users/plastico/vue/backer/src/assets/backerlogo.png"
-       sodipodi:nodetypes="cccc"
+       style="opacity:0.995;fill:none;stroke:#fffafa;stroke-width:3.665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 62.422577,49.245647 51.894936,61.188284 v 14.430688 l 9.844878,-11.238911"
        id="path10"
-       d="M 60.665181,42.333338 42.522321,61.331995 V 84.288708 L 59.488537,66.409557"
-       style="opacity:0.995;fill:none;stroke:#fffafa;stroke-width:3.665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <path
-       inkscape:export-ydpi="96"
-       inkscape:export-xdpi="96"
+       sodipodi:nodetypes="cccc"
        inkscape:export-filename="/Users/plastico/vue/backer/src/assets/backerlogo.png"
-       id="path12"
-       d="m 43.164098,71.914118 14.53392,-14.79735"
-       style="opacity:0.995;fill:none;stroke:#fffafa;stroke-width:3.665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <path
-       inkscape:export-ydpi="96"
        inkscape:export-xdpi="96"
-       inkscape:export-filename="/Users/plastico/vue/backer/src/assets/backerlogo.png"
+       inkscape:export-ydpi="96" />
+    <path
+       sodipodi:nodetypes="cccc"
+       style="opacity:0.995;fill:none;stroke:#fffafa;stroke-width:3.665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 79.627888,70.08733 79.35027,58.576297 67.135183,49.140604 67.412802,82.681798"
        id="path14"
-       d="M 83.61126,63.877954 83.247726,49.320812 67.252341,49.843551 67.615876,83.384745"
-       style="opacity:0.995;fill:none;stroke:#fffafa;stroke-width:3.665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       inkscape:export-filename="/Users/plastico/vue/backer/src/assets/backerlogo.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
     <text
-       id="text18"
-       y="108.24416"
-       x="37.952274"
+       xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;inline-size:23.8134;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       xml:space="preserve"><tspan
+       x="37.952274"
+       y="108.24416"
+       id="text18"><tspan
          x="37.952274"
          y="108.24416"><tspan
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">印</tspan></tspan></text>

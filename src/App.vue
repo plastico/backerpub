@@ -2,12 +2,12 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      color="purple lighten-1"
       dark
     >
       <div class="d-flex align-center">
         <v-img
-          alt="Vuetify Logo"
+          alt="Backer Logo"
           class="shrink mr-2"
           contain
           src="@/assets/backerlogo.png"
