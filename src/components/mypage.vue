@@ -5,70 +5,67 @@
                  <canvas 
             id="canvas" width="500" height="500"></canvas>
         </v-container>
+         <v-container fluid>
+      <v-row dense>
+        <v-col
+          v-for="badge in badges"
+          :key="badge.name"
+          :cols="badge.flex"
+        >
+          <v-card>
+            <v-img
+              :src="badge.url"
+              class="white--text align-end"
+              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              height="200px"
+            >
+              <v-card-title v-text="badge.name"></v-card-title>
+            </v-img>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
         </v-layout>
   </v-container>
 </template>
 
 <script>
+import firebase from "../firebase.js"
 import { fabric } from 'fabric-browseronly'
   export default {
     name: 'HelloWorld',
-    data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
+      data () {
+          return {
+             badges: [
       ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
-    }),
-    mounted() {
+        }
+      },
+    async mounted() {
+      const storage = firebase.storage();
     const canvas = new fabric.Canvas('canvas',{preserveObjectStacking: true});
-    
+    const user = firebase.auth().currentUser;
+    await firebase.firestore()
+      .doc(`users/${user.uid}`).collection('holds').get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            // doc.data() is never undefined for query doc snapshots
+           
+            var pathReference = storage.ref(`layout/${doc.data().src}.png`);
+            pathReference.getDownloadURL().then(url=>{
+              const obj = {url: url};
+              const result1= { ...obj, ...doc.data() };
+
+
+               //doc.data().url = url;
+              this.badges.push(result1);
+               console.log(doc.id, " => ", doc.data());
+
+            });
+            
+        });
+    });
+
+
     const rect = new fabric.Rect({
       fill: 'red',
       width: 100,
