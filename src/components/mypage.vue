@@ -3,21 +3,21 @@
     <v-layout  align="center">
           <v-container>
                  <canvas 
-            id="canvas" width="500" height="500"></canvas>
+            id="canvas" width="608" height="424"></canvas>
         </v-container>
-         <v-container fluid>
-      <v-row dense>
+          <v-container fluid class="overflow-y-auto">
+      <v-row>
         <v-col
           v-for="badge in badges"
           :key="badge.name"
-          :cols="badge.flex"
+          :cols="4"
         >
-          <v-card>
+          <v-card flat color="grey lighten-5">
             <v-img
+              max-height="125"
+              contain
               :src="badge.url"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
+              class="grey--text align-top"
             >
               <v-card-title v-text="badge.name"></v-card-title>
             </v-img>
@@ -25,6 +25,8 @@
         </v-col>
       </v-row>
     </v-container>
+        
+    
 
         </v-layout>
   </v-container>
@@ -50,7 +52,7 @@ import { fabric } from 'fabric-browseronly'
         querySnapshot.forEach(doc => {
             // doc.data() is never undefined for query doc snapshots
            
-            var pathReference = storage.ref(`layout/${doc.data().src}.png`);
+            var pathReference = storage.ref(`layout/${doc.data().src}`);
             pathReference.getDownloadURL().then(url=>{
               const obj = {url: url};
               const result1= { ...obj, ...doc.data() };
@@ -74,22 +76,29 @@ import { fabric } from 'fabric-browseronly'
     });
     new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-as-ar.png', function(oImg) {
         oImg.scale(0.25);
-        oImg.hasControls =  oImg.hasBorders  = false;
+        //oImg.hasControls =  oImg.hasBorders  = false;
+         oImg.centeredScaling = true;
+          oImg.lockScalingX = oImg.lockScalingY = true;
         canvas.add(oImg);
       });
     new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-out.png', function(oImg) {
       oImg.scale(0.25);
-      oImg.hasControls =  oImg.hasBorders  = false;
+      //oImg.hasControls =  oImg.hasBorders  = false;
+       oImg.centeredScaling = true;
+          oImg.lockScalingX = oImg.lockScalingY = true;
       canvas.add(oImg);
     });
     new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-ski.png', function(oImg) {
       oImg.scale(0.25);
-      oImg.hasControls =  oImg.hasBorders  = false;
+      //oImg.hasControls =  oImg.hasBorders  = false;
+       oImg.centeredScaling = true;
+         oImg.lockScalingX = oImg.lockScalingY = true;
       canvas.add(oImg);
     });
     new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-adv.png', function(oImg) {
       oImg.scale(0.25);
-      oImg.hasControls =  oImg.hasBorders  = false;
+      //oImg.hasControls =  oImg.hasBorders  = false;
+      oImg.centeredScaling = true;
       canvas.add(oImg);
     });
     canvas.add(rect);
