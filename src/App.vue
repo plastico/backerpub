@@ -14,7 +14,7 @@
           transition="scale-transition"
           width="40"
         />
-        <h1>Backer</h1>
+        <h1>Backer (ß)</h1>
         
       </div>
 

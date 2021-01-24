@@ -1,52 +1,207 @@
 <template>
   <v-container bg fill-height grid-list-md text-xs-center>
     <v-layout  align="center">
+      <v-row>
+        <v-col>
           <v-container>
+            <v-row><v-col>
                  <canvas 
             id="canvas" width="608" height="424"></canvas>
-        </v-container>
-          <v-container fluid class="overflow-y-auto">
+            </v-col></v-row>
+            <v-row>
+              <v-col>
+                <v-btn v-on:click="deleteSelectedObjectsFromCanvas">delete</v-btn>
+              </v-col>
+              <v-col>
+                <v-btn v-on:click="exportImage">export</v-btn>
+              </v-col>
+              <v-col>
+                <v-btn v-on:click="saveToJSON">apply</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+        <v-col :cols="5">
+          <v-combobox
+                  v-model="select"
+                  :items="items"
+                  item-text="name"
+                  item-value="id"
+                  label="type"
+                  @change="updateBadges()">
+                </v-combobox>
+                  <v-container class="overflow-y-auto">
       <v-row>
         <v-col
           v-for="badge in badges"
           :key="badge.name"
-          :cols="4"
+           :cols="4"
         >
-          <v-card flat color="grey lighten-5">
+          <v-card flat color="grey lighten-5" @click="addBadgeToCanvas(badge.url)">
             <v-img
               max-height="125"
               contain
               :src="badge.url"
               class="grey--text align-top"
             >
-              <v-card-title v-text="badge.name"></v-card-title>
             </v-img>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
-        
-    
-
+        </v-col>
+      </v-row>
         </v-layout>
   </v-container>
 </template>
 
 <script>
 import firebase from "../firebase.js"
+import axios from 'axios'
 import { fabric } from 'fabric-browseronly'
   export default {
     name: 'HelloWorld',
       data () {
           return {
-             badges: [
-      ],
+             badges: [ ],
+             canvas:"",
+             // 入力欄に表示される内容です。
+              select: [],
+              // リストに表示される内容です。
+              items: [],
+        }
+      },
+      methods:{
+        deleteSelectedObjectsFromCanvas:function(){
+            var selection = this.canvas.getActiveObject();
+             //console.log(JSON.stringify(selection));
+            if (selection.type === 'activeSelection') {
+                selection.forEachObject(element => {
+                    console.log(element);
+                    this.canvas.remove(element);
+                });
+            }
+            else{
+                this.canvas.remove(selection);
+            }
+            this.canvas.discardActiveObject();
+            this.canvas.requestRenderAll();
+        },
+         exportImage:function() {},
+        updateBadges:function() {
+          this.badges=[];
+          const storage = firebase.storage();
+          console.log(JSON.stringify(this.select));
+          firebase.firestore()
+            .doc(`badges/${this.select.id}`).collection('badges').get().then(querySnapshot => {
+              querySnapshot.forEach(doc => {
+                  // doc.data() is never undefined for query doc snapshots
+                
+            var pathReference = storage.ref(`layout/${doc.data().src}`);
+            pathReference.getDownloadURL().then(url=>{
+              const obj = {url: url};
+              const result1= { ...obj, ...doc.data() };
+
+
+               //doc.data().url = url;
+              this.badges.push(result1);
+               console.log(doc.id, " => ", doc.data());
+
+            });
+            
+        });
+    }); 
+
+        },
+         saveToJSON:function() {
+          const storage = firebase.storage();
+           const user = firebase.auth().currentUser;
+           var storageRef = storage.ref(`users/${user.uid}/layout.json`);
+           const jsonString = JSON.stringify(this.canvas);
+           var blob = new Blob([jsonString], {type: "application/json"})
+           const uploadTask = storageRef.put(blob);
+              uploadTask.on('state_changed', 
+                 /* snapshot => {
+                    //const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    //this.fileLoading = percentage
+                  }, */
+                  err => {
+                    console.log(err)
+                    /*this['flash/setFlash']({
+                      message: 'ファイルのアップロードに失敗しました。',
+                      type: 'error'
+                    })*/
+                  },
+                 /* () => {
+                    uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+                      this.fileLoading = 0
+                      //this.thumbnail = downloadURL
+                    })
+                  }*/
+                );
+        },
+        addBadgeToCanvas:function(url){
+            
+            //console.log(url);
+            new fabric.Image.fromURL(url,async oImg => {
+                    //oImg.scale(0.25);
+                    //oImg.hasControls =  oImg.hasBorders  = false;
+                    oImg.centeredScaling = true;
+                    //oImg.lockScalingX = oImg.lockScalingY = true;
+                    this.canvas.add(oImg);
+                    //const scale = oImg.getObjectScaling();
+                    oImg.set('scaleX', 100 / oImg.width);
+                    oImg.set('scaleY', 100 / oImg.width);
+                    this.canvas.discardActiveObject();
+                    this.canvas.requestRenderAll();
+                  });
+
+          
         }
       },
     async mounted() {
-      const storage = firebase.storage();
-    const canvas = new fabric.Canvas('canvas',{preserveObjectStacking: true});
-    const user = firebase.auth().currentUser;
+
+    this.canvas = new fabric.Canvas('canvas',{preserveObjectStacking: true});
+     const storage = firebase.storage();
+      const user = firebase.auth().currentUser;
+      var storageRef = storage.ref(`users/${user.uid}/layout.json`);
+      storageRef.getDownloadURL().then(url => {
+        // 取得したURLにGETリクエストを投げる
+        console.log(url)
+        return axios.get(url)
+      }).then(response => {
+        // 返ってきたresponseのdataプロパティにjsonファイルの中身が格納されている
+        console.log(response)
+        const data = response.data
+        console.log(data)
+         this.canvas.loadFromJSON(data, function() {
+              this.canvas.renderAll();
+         })
+         
+       // commit('setData', { raceData: data })
+      })
+
+
+    let firstRecord = true;
+
+    firebase.firestore()
+      .collection('badges').get().then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+           
+              this.items.push({ name:doc.data().name, id:doc.id});
+              console.log(JSON.stringify(this.items));
+              if (firstRecord){
+                firstRecord=false;
+                this.select = { name:doc.data().name, id:doc.id};
+                this.updateBadges();
+              }
+          });
+      });
+      
+
+
+
+    /* const user = firebase.auth().currentUser;
     await firebase.firestore()
       .doc(`users/${user.uid}`).collection('holds').get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -65,7 +220,7 @@ import { fabric } from 'fabric-browseronly'
             });
             
         });
-    });
+    }); */
 
 
     const rect = new fabric.Rect({
@@ -74,34 +229,8 @@ import { fabric } from 'fabric-browseronly'
       height: 100,
       hasControls:true
     });
-    new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-as-ar.png', function(oImg) {
-        oImg.scale(0.25);
-        //oImg.hasControls =  oImg.hasBorders  = false;
-         oImg.centeredScaling = true;
-          oImg.lockScalingX = oImg.lockScalingY = true;
-        canvas.add(oImg);
-      });
-    new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-out.png', function(oImg) {
-      oImg.scale(0.25);
-      //oImg.hasControls =  oImg.hasBorders  = false;
-       oImg.centeredScaling = true;
-          oImg.lockScalingX = oImg.lockScalingY = true;
-      canvas.add(oImg);
-    });
-    new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-ski.png', function(oImg) {
-      oImg.scale(0.25);
-      //oImg.hasControls =  oImg.hasBorders  = false;
-       oImg.centeredScaling = true;
-         oImg.lockScalingX = oImg.lockScalingY = true;
-      canvas.add(oImg);
-    });
-    new fabric.Image.fromURL('https://members.scouts.org.uk/images/content/badges/2015sc-cs-adv.png', function(oImg) {
-      oImg.scale(0.25);
-      //oImg.hasControls =  oImg.hasBorders  = false;
-      oImg.centeredScaling = true;
-      canvas.add(oImg);
-    });
-    canvas.add(rect);
+   
+    this.canvas.add(rect);
   }
   }
 </script>
