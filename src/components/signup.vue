@@ -9,7 +9,7 @@
                     label="E-mail" v-model="email" 
                 ></v-text-field>
                 <v-text-field
-                    label="Password" v-model="password" 
+                    label="Password" type="password" v-model="password" 
                 ></v-text-field>
             </v-card-text>
                 <v-card-actions>
@@ -37,6 +37,7 @@ export default {
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(() => {
           alert("Create Account");
+
         })
         .catch(error => {
           alert("Error!", error.message);

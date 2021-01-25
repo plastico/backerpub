@@ -13,13 +13,13 @@
                 <v-btn v-on:click="deleteSelectedObjectsFromCanvas">delete</v-btn>
               </v-col>
               <v-col>
-                <v-btn v-on:click="exportImage">export</v-btn>
+                <v-btn v-on:click="exportImage" disabled >export</v-btn>
               </v-col>
               <v-col>
                 <v-btn v-on:click="reloadJSON">Reload</v-btn>
               </v-col>
               <v-col>
-                <v-btn v-on:click="saveToJSON">apply</v-btn>
+                <v-btn v-on:click="saveToJSON">save</v-btn>
               </v-col>
             </v-row>
        

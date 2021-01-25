@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import router from "../router";
 import firebase from "../firebase.js";
 export default {
   name: "signout",
@@ -40,6 +41,7 @@ export default {
           this.snackbarText = 'Logout!';
           this.snackbarColor = 'success';
           this.snackbar = true;
+          router.push('/');
         })
         .catch(error => {
           alert(error);
