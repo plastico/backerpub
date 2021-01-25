@@ -16,20 +16,24 @@
                 <v-btn v-on:click="exportImage">export</v-btn>
               </v-col>
               <v-col>
+                <v-btn v-on:click="reloadJSON">Reload</v-btn>
+              </v-col>
+              <v-col>
                 <v-btn v-on:click="saveToJSON">apply</v-btn>
               </v-col>
             </v-row>
+       
           </v-container>
         </v-col>
         <v-col :cols="5">
-          <v-combobox
+          <v-select
                   v-model="select"
                   :items="items"
                   item-text="name"
                   item-value="id"
                   label="type"
                   @change="updateBadges()">
-                </v-combobox>
+                </v-select>
                   <v-container class="overflow-y-auto">
       <v-row>
         <v-col
@@ -93,12 +97,12 @@ import { fabric } from 'fabric-browseronly'
           const storage = firebase.storage();
           console.log(JSON.stringify(this.select));
           firebase.firestore()
-            .doc(`badges/${this.select.id}`).collection('badges').get().then(querySnapshot => {
+            .doc(`badges/${this.select}`).collection('badges').get().then(querySnapshot => {
               querySnapshot.forEach(doc => {
                   // doc.data() is never undefined for query doc snapshots
                 
             var pathReference = storage.ref(`layout/${doc.data().src}`);
-            pathReference.getDownloadURL().then(url=>{
+              pathReference.getDownloadURL().then(url=>{
               const obj = {url: url};
               const result1= { ...obj, ...doc.data() };
 
@@ -111,6 +115,28 @@ import { fabric } from 'fabric-browseronly'
             
         });
     }); 
+
+        },
+        reloadJSON:function() {
+          
+     const storage = firebase.storage();
+      const user = firebase.auth().currentUser;
+      var storageRef = storage.ref(`users/${user.uid}/layout.json`);
+      storageRef.getDownloadURL().then(url => {
+        // 取得したURLにGETリクエストを投げる
+        console.log(url)
+        return axios.get(url)
+      }).then(response => {
+        // 返ってきたresponseのdataプロパティにjsonファイルの中身が格納されている
+        console.log(response)
+        const data = response.data
+        console.log(data)
+         this.canvas.loadFromJSON(data,() => {
+              this.canvas.renderAll();
+         })
+         
+       // commit('setData', { raceData: data })
+      });
 
         },
          saveToJSON:function() {
@@ -162,25 +188,8 @@ import { fabric } from 'fabric-browseronly'
     async mounted() {
 
     this.canvas = new fabric.Canvas('canvas',{preserveObjectStacking: true});
-     const storage = firebase.storage();
-      const user = firebase.auth().currentUser;
-      var storageRef = storage.ref(`users/${user.uid}/layout.json`);
-      storageRef.getDownloadURL().then(url => {
-        // 取得したURLにGETリクエストを投げる
-        console.log(url)
-        return axios.get(url)
-      }).then(response => {
-        // 返ってきたresponseのdataプロパティにjsonファイルの中身が格納されている
-        console.log(response)
-        const data = response.data
-        console.log(data)
-         this.canvas.loadFromJSON(data, function() {
-              this.canvas.renderAll();
-         })
-         
-       // commit('setData', { raceData: data })
-      })
-
+    this.reloadJSON();
+    
 
     let firstRecord = true;
 
@@ -192,7 +201,7 @@ import { fabric } from 'fabric-browseronly'
               console.log(JSON.stringify(this.items));
               if (firstRecord){
                 firstRecord=false;
-                this.select = { name:doc.data().name, id:doc.id};
+                this.select = doc.id;
                 this.updateBadges();
               }
           });
