@@ -22,6 +22,24 @@
                 <v-btn v-on:click="saveToJSON">save</v-btn>
               </v-col>
             </v-row>
+           
+            <v-row>
+                <v-col :cols="2">
+                       <v-btn v-on:click="toggleShowSlider">zoom</v-btn>   
+          </v-col>  <v-col :cols="4">
+           
+                          <v-slider  v-show="show_slider"
+                            v-model="scale"
+                            thumb-label="always"
+                            hint="Im a hint"
+                            max="30"
+                            min="1"
+                            @change="setZoom()"
+                          ></v-slider> 
+          </v-col>
+             
+              </v-row>
+         
        
           </v-container>
         </v-col>
@@ -73,9 +91,14 @@ import { fabric } from 'fabric-browseronly'
               select: [],
               // リストに表示される内容です。
               items: [],
+              show_slider: false,
+              scale:10
         }
       },
       methods:{
+         toggleShowSlider:function(){
+            this.show_slider = !this.show_slider;
+        },
         deleteSelectedObjectsFromCanvas:function(){
             var selection = this.canvas.getActiveObject();
              //console.log(JSON.stringify(selection));
@@ -128,11 +151,15 @@ import { fabric } from 'fabric-browseronly'
         return axios.get(url)
       }).then(response => {
         // 返ってきたresponseのdataプロパティにjsonファイルの中身が格納されている
-        console.log(response)
+        //console.log(response)
         const data = response.data
         console.log(data)
+        //const source = JSON.parse(data);
          this.canvas.loadFromJSON(data,() => {
               this.canvas.renderAll();
+              //const tmp = this.canvas.item(0).getElement();
+              this.scale = data.zoomParam;
+              this.setZoom();
          })
          
        // commit('setData', { raceData: data })
@@ -143,7 +170,12 @@ import { fabric } from 'fabric-browseronly'
           const storage = firebase.storage();
            const user = firebase.auth().currentUser;
            var storageRef = storage.ref(`users/${user.uid}/layout.json`);
-           const jsonString = JSON.stringify(this.canvas);
+           const saveJson = this.canvas;
+           console.log(saveJson);
+           const tmpJsonString = JSON.stringify(saveJson);
+           const tmpObj = JSON.parse(tmpJsonString);
+           tmpObj.zoomParam = this.scale;
+           const jsonString = JSON.stringify(tmpObj);
            var blob = new Blob([jsonString], {type: "application/json"})
            const uploadTask = storageRef.put(blob);
               uploadTask.on('state_changed', 
@@ -183,6 +215,15 @@ import { fabric } from 'fabric-browseronly'
                   });
 
           
+        },
+         setZoom:function(){
+
+            this.canvas.zoomToPoint(new fabric.Point(this.canvas.width / 2, this.canvas.height / 2), this.scale/10);
+            this.canvas.setZoom(this.scale/10)
+            //this.canvas.setZoom(this.scale/10);
+
+
+
         }
       },
     async mounted() {
