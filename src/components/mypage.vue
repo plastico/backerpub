@@ -13,7 +13,8 @@
                 <v-btn v-on:click="deleteSelectedObjectsFromCanvas">delete</v-btn>
               </v-col>
               <v-col>
-                <v-btn v-on:click="exportImage" disabled >export</v-btn>
+                <v-btn v-on:click="exportImage">export</v-btn>
+                <a href="" id="download_link"></a>
               </v-col>
               <v-col>
                 <v-btn v-on:click="reloadJSON">Reload</v-btn>
@@ -31,7 +32,7 @@
                           <v-slider  v-show="show_slider"
                             v-model="scale"
                             thumb-label="always"
-                            hint="Im a hint"
+                            hint="Set scale"
                             max="30"
                             min="1"
                             @change="setZoom()"
@@ -114,7 +115,19 @@ import { fabric } from 'fabric-browseronly'
             this.canvas.discardActiveObject();
             this.canvas.requestRenderAll();
         },
-         exportImage:function() {},
+         exportImage:function() {
+              
+              
+              var dlLink = document.getElementById('download_link');
+              dlLink.href = this.canvas.toDataURL();
+              dlLink.download = 'toData.png';
+              dlLink.click();
+   
+
+
+
+
+         },
         updateBadges:function() {
           this.badges=[];
           const storage = firebase.storage();
@@ -212,7 +225,7 @@ import { fabric } from 'fabric-browseronly'
                     oImg.set('scaleY', 100 / oImg.width);
                     this.canvas.discardActiveObject();
                     this.canvas.requestRenderAll();
-                  });
+                  }, { crossOrigin: '*' });
 
           
         },

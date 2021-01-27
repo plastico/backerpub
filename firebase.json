@@ -15,7 +15,14 @@
         "source": "**",
         "destination": "/index.html"
       }
-    ]
+    ],
+      "headers": [ {
+        "source": "**/*.@(.png)",
+        "headers": [ {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        } ]
+  } ]
   },
   "storage": {
     "rules": "storage.rules"

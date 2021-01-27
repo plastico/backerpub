@@ -33,20 +33,7 @@ export default {
    }
   },
   methods: {
-    singout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.snackbarText = 'Logout!';
-          this.snackbarColor = 'success';
-          this.snackbar = true;
-          router.push('/');
-        })
-        .catch(error => {
-          alert(error);
-        });
-    }
+    
   }
 };
 </script>

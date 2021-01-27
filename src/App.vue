@@ -23,7 +23,7 @@
  <v-toolbar-items class="hidden-sm-and-down">
         <v-btn text to="/mypage">Home</v-btn>
         <v-btn text to="/about">About</v-btn>
-         <v-btn text to="/signout">SignOut</v-btn>
+         <v-btn text @click="signout">SignOut</v-btn>
          <v-btn text to="/signup">SignUp</v-btn>
      
       </v-toolbar-items>
@@ -41,7 +41,9 @@
 
 <script>
 
+import firebase from "./firebase.js";
 export default {
+  
   name: 'App',
 
   components: {
@@ -51,5 +53,20 @@ export default {
   data: () => ({
     //
   }),
+  methods:{
+    signout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.go({path: this.$router.currentRoute.path, force: true});
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
+
+
+  }
 };
 </script>
