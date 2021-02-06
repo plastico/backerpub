@@ -30,7 +30,7 @@ yarn lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### Add src/firebase.json
+### Add src/firebase.js
 
 ```
 import firebase from "firebase";
