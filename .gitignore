@@ -2,7 +2,10 @@
 node_modules
 /dist
 /src/firebase.js
-
+/.firebase
+.firebaserc
+/.github
+/planning
 
 # local env files
 .env.local
@@ -22,3 +25,4 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.cache
