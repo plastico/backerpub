@@ -1,6 +1,6 @@
 # backer
 
-Backer is demo project for layout badges to collection.
+Backer is the demo project for layout scout badges by vue.js/fabric.js/firebase/vuetify.
 
 [Demo site](https://backer2021-87d86.firebaseapp.com/ "Demo")
 
