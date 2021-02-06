@@ -35,13 +35,13 @@ import firebase from "firebase";
 import "firebase/auth";
 
 const config = {
-apiKey: "****\*\*****",
-authDomain: "****\*\*****",
-projectId: "****\*\*****",
-storageBucket: "****\*\*****",
-messagingSenderId: "****\*\*****",
-appId: "****\*\*****",
-measurementId: "****\*\*****",
+apiKey: "*********",
+authDomain: "*********",
+projectId: "*********",
+storageBucket: "*********",
+messagingSenderId: "*********",
+appId: "*********",
+measurementId: "*********",
 };
 
 firebase.getCurrentUser = () => {
