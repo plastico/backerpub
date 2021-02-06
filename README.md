@@ -2,7 +2,7 @@
 
 Backer is demo project for layout badges to collection.
 
-[Demo](https://backer2021-87d86.firebaseapp.com/ "Demo")
+[Demo site](https://backer2021-87d86.firebaseapp.com/ "Demo")
 
 ## Project setup
 
