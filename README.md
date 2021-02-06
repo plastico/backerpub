@@ -1,5 +1,7 @@
 # backer
 
+Backer is demo project for layout badges to collection.
+
 ## Project setup
 
 ```
