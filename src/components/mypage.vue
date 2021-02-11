@@ -117,9 +117,10 @@ import { fabric } from 'fabric-browseronly'
         },
          exportImage:function() {
               
-              
+
+
               var dlLink = document.getElementById('download_link');
-              dlLink.href = this.canvas.toDataURL();
+              dlLink.href = this.canvas.toDataURL({multiplier: 3});
               dlLink.download = 'toData.png';
               dlLink.click();
    
@@ -174,6 +175,10 @@ import { fabric } from 'fabric-browseronly'
               this.scale = data.zoomParam;
               this.setZoom();
          })
+
+           
+
+
          
        // commit('setData', { raceData: data })
       });
@@ -241,7 +246,7 @@ import { fabric } from 'fabric-browseronly'
       },
     async mounted() {
 
-    this.canvas = new fabric.Canvas('canvas',{preserveObjectStacking: true});
+    this.canvas = new fabric.Canvas('canvas',{preserveObjectStacking: true, backgroundColor: 'rgb(255,255,255)'});
     this.reloadJSON();
     
 
