@@ -16,10 +16,10 @@
                 <v-btn v-on:click="exportImage">export</v-btn>
                 <a href="" id="download_link"></a>
               </v-col>
-              <v-col>
+              <v-col v-if="login">
                 <v-btn v-on:click="reloadJSON">Reload</v-btn>
               </v-col>
-              <v-col>
+              <v-col v-if="login">
                 <v-btn v-on:click="saveToJSON">save</v-btn>
               </v-col>
             </v-row>
@@ -82,8 +82,17 @@
 import firebase from "../firebase.js"
 import axios from 'axios'
 import { fabric } from 'fabric-browseronly'
+
   export default {
     name: 'HelloWorld',
+    computed: {
+      user() {
+        return this.$store.getters.user;
+      },
+      login() {
+        return this.$store.getters.isSignedIn;
+      }
+    },
       data () {
           return {
              badges: [ ],
@@ -116,18 +125,11 @@ import { fabric } from 'fabric-browseronly'
             this.canvas.requestRenderAll();
         },
          exportImage:function() {
-              
-
-
               var dlLink = document.getElementById('download_link');
               dlLink.href = this.canvas.toDataURL({multiplier: 3});
               dlLink.download = 'toData.png';
               dlLink.click();
    
-
-
-
-
          },
         updateBadges:function() {
           this.badges=[];
@@ -155,33 +157,36 @@ import { fabric } from 'fabric-browseronly'
 
         },
         reloadJSON:function() {
+
+          const user = firebase.auth().currentUser;
+
+          if(user){
+              const storage = firebase.storage();
+              
+               console.log(JSON.stringify(this.user));
+               console.log(JSON.stringify(user));
+              var storageRef = storage.ref(`users/${user.uid}/layout.json`);
+              storageRef.getDownloadURL().then(url => {
+                // 取得したURLにGETリクエストを投げる
+                console.log(url)
+                return axios.get(url)
+              }).then(response => {
+                // 返ってきたresponseのdataプロパティにjsonファイルの中身が格納されている
+                //console.log(response)
+                const data = response.data
+                console.log(data)
+                //const source = JSON.parse(data);
+                this.canvas.loadFromJSON(data,() => {
+                      this.canvas.renderAll();
+                      //const tmp = this.canvas.item(0).getElement();
+                      this.scale = data.zoomParam;
+                      this.setZoom();
+                })
+              // commit('setData', { raceData: data })
+              });
+          }
           
-     const storage = firebase.storage();
-      const user = firebase.auth().currentUser;
-      var storageRef = storage.ref(`users/${user.uid}/layout.json`);
-      storageRef.getDownloadURL().then(url => {
-        // 取得したURLにGETリクエストを投げる
-        console.log(url)
-        return axios.get(url)
-      }).then(response => {
-        // 返ってきたresponseのdataプロパティにjsonファイルの中身が格納されている
-        //console.log(response)
-        const data = response.data
-        console.log(data)
-        //const source = JSON.parse(data);
-         this.canvas.loadFromJSON(data,() => {
-              this.canvas.renderAll();
-              //const tmp = this.canvas.item(0).getElement();
-              this.scale = data.zoomParam;
-              this.setZoom();
-         })
 
-           
-
-
-         
-       // commit('setData', { raceData: data })
-      });
 
         },
          saveToJSON:function() {

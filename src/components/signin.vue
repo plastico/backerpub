@@ -27,6 +27,9 @@
             </v-card-actions>
              </v-form>
     </v-card>
+
+      <p class="text-center"> To make your account, please <router-link to="/signup">sign up</router-link></p>
+     
         
     </v-app>
 
@@ -39,6 +42,8 @@
 
 <script>
 import firebase from "../firebase.js";
+import store from "../store";
+
 export default {
   name: "signin",
   data() {
@@ -55,7 +60,12 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
+        .then(user => {
+
+          user = user ? user.user : {};
+          store.commit('onAuthStateChanged', user);
+          store.commit('onUserStatusChanged', user.uid ? true : false);
+
            this.snackbarText = 'ログイン成功!';
           this.snackbarColor = 'success';
           this.snackbar = true;
