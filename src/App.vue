@@ -13,19 +13,19 @@
         >
 
           <v-list-item text to="/mypage">
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title>バッヂ帳</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="/about">
-            <v-list-item-title>About</v-list-item-title>
+            <v-list-item-title>このアプリについて</v-list-item-title>
           </v-list-item>
 
 
           <v-list-item  v-if="login" @click="signout">
-            <v-list-item-title>SignOut</v-list-item-title>
+            <v-list-item-title>ログアウト</v-list-item-title>
           </v-list-item>
           <v-list-item  v-else to="/signin">
-            <v-list-item-title>SignIn</v-list-item-title>
+            <v-list-item-title>ログイン</v-list-item-title>
           </v-list-item>
 
         </v-list-item-group>
@@ -45,15 +45,15 @@
           transition="scale-transition"
           width="40"
         />
-        <h1>Backer (ß)</h1>
+        <h1>私のバッヂ帳</h1>
 
       <v-spacer></v-spacer>
 
  <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn text to="/mypage">Home</v-btn>
-        <v-btn text to="/about">About</v-btn>
-         <v-btn v-if="login" text @click="signout">SignOut</v-btn>
-          <v-btn text v-else to="/signin">SignIn</v-btn>
+        <v-btn text to="/mypage">バッヂ帳</v-btn>
+        <v-btn text to="/about">このアプリについて</v-btn>
+         <v-btn v-if="login" text @click="signout">ログアウト</v-btn>
+          <v-btn text v-else to="/signin">ログイン</v-btn>
       </v-toolbar-items>
 
     </v-app-bar>
