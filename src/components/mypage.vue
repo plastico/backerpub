@@ -10,23 +10,23 @@
             </v-col></v-row>
             <v-row>
               <v-col>
-                <v-btn v-on:click="deleteSelectedObjectsFromCanvas">delete</v-btn>
+                <v-btn v-on:click="deleteSelectedObjectsFromCanvas">消す</v-btn>
               </v-col>
               <v-col>
-                <v-btn v-on:click="exportImage">export</v-btn>
+                <v-btn v-on:click="exportImage">画像</v-btn>
                 <a href="" id="download_link"></a>
               </v-col>
               <v-col v-if="login">
-                <v-btn v-on:click="reloadJSON">Reload</v-btn>
+                <v-btn v-on:click="reloadJSON">リセット</v-btn>
               </v-col>
               <v-col v-if="login">
-                <v-btn v-on:click="saveToJSON">save</v-btn>
+                <v-btn v-on:click="saveToJSON">保存</v-btn>
               </v-col>
             </v-row>
            
             <v-row>
                 <v-col :cols="2">
-                       <v-btn v-on:click="toggleShowSlider">zoom</v-btn>   
+                       <v-btn v-on:click="toggleShowSlider">ズーム</v-btn>   
           </v-col>  <v-col :cols="4">
            
                           <v-slider  v-show="show_slider"

@@ -10,7 +10,7 @@
     <v-card width="400px" class="mx-auto mt-5">
       <v-form @submit.prevent="userSingIn">
         <v-card-title>
-        <h1 class="display-1">Log in</h1>
+        <h1 class="display-1">ログイン</h1>
         </v-card-title>
         <v-card-text>
 
@@ -23,7 +23,7 @@
             ></v-text-field>
         </v-card-text>
             <v-card-actions>
-                 <v-btn type="submit" >Sign in Now!!</v-btn>
+                 <v-btn type="submit" >ログイン</v-btn>
             </v-card-actions>
              </v-form>
     </v-card>

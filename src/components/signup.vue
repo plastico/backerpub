@@ -13,7 +13,7 @@
                 ></v-text-field>
             </v-card-text>
                 <v-card-actions>
-                    <v-btn @click="createUserAccount">Sign UP!!</v-btn>
+                    <v-btn @click="createUserAccount">サインアップ</v-btn>
                 </v-card-actions>
             
         </v-card>
