@@ -10,23 +10,26 @@
             </v-col></v-row>
             <v-row>
               <v-col>
-                <v-btn v-on:click="deleteSelectedObjectsFromCanvas">消す</v-btn>
+                <v-btn v-on:click="deleteSelectedObjectsFromCanvas">
+                  <v-icon large>mdi-eraser</v-icon>
+                </v-btn>
               </v-col>
               <v-col>
-                <v-btn v-on:click="exportImage">画像</v-btn>
+                <v-btn v-on:click="exportImage"><v-icon large>mdi-camera-plus</v-icon></v-btn>
                 <a href="" id="download_link"></a>
               </v-col>
               <v-col v-if="login">
-                <v-btn v-on:click="reloadJSON">リセット</v-btn>
+                <v-btn v-on:click="reloadJSON"> <v-icon large>mdi-reload</v-icon></v-btn>
               </v-col>
               <v-col v-if="login">
-                <v-btn v-on:click="saveToJSON">保存</v-btn>
+                
+                <v-btn v-on:click="saveToJSON"><v-icon large>mdi-cloud-upload</v-icon></v-btn>
               </v-col>
             </v-row>
            
             <v-row>
                 <v-col :cols="2">
-                       <v-btn v-on:click="toggleShowSlider">ズーム</v-btn>   
+                       <v-btn v-on:click="toggleShowSlider"><v-icon large>mdi-magnify-plus</v-icon></v-btn>   
           </v-col>  <v-col :cols="4">
            
                           <v-slider  v-show="show_slider"
@@ -58,11 +61,11 @@
         <v-col
           v-for="badge in badges"
           :key="badge.name"
-           :cols="4"
+           :cols="3"
         >
-          <v-card flat color="grey lighten-5" @click="addBadgeToCanvas(badge.url)">
+          <v-card color="grey lighten-5" @click="addBadgeToCanvas(badge.url)">
             <v-img
-              max-height="125"
+              max-height="100"
               contain
               :src="badge.url"
               class="grey--text align-top"
@@ -297,9 +300,9 @@ import { fabric } from 'fabric-browseronly'
 
 
     const rect = new fabric.Rect({
-      fill: 'red',
-      width: 100,
-      height: 100,
+      fill: 'midnightblue',
+      width: 500,
+      height: 400,
       hasControls:true
     });
    
